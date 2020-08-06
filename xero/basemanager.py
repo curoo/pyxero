@@ -318,7 +318,10 @@ class BaseManager(object):
 
     def _delete(self, id):
         uri = '/'.join([self.base_url, self.name, id])
-        return uri, {}, 'delete', None, None, False
+        method = 'delete'
+        if self.name == 'Payments':
+            method = 'post'
+        return uri, {}, method, None, None, False
 
     def _delete_requests(self, data):
         uri, params, method, body, headers, singleobject = self.save_or_put(data, method='post')
