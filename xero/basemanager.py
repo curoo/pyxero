@@ -319,9 +319,14 @@ class BaseManager(object):
     def _delete(self, id):
         uri = '/'.join([self.base_url, self.name, id])
         method = 'delete'
+        data = None
+        headers = None
         if self.name == 'Payments':
             method = 'post'
-        return uri, {}, method, None, None, False
+            data = json.dumps({"Status": "DELETED"})
+            headers = {}
+            headers['content-type'] = 'application/json'
+        return uri, {}, method, data, headers, False
 
     def _delete_requests(self, data):
         uri, params, method, body, headers, singleobject = self.save_or_put(data, method='post')
